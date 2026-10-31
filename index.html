@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Дневник расходов</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       Этот файл ГОТОВ и не меняется на протяжении уроков 7-15.
+       Вся работа идёт только в app.js — там ты пишешь JavaScript.
+
+       Каждому элементу, которым будет управлять JS, дан id.
+       Именно по id JavaScript находит элемент на странице.
+       ============================================================ -->
+
+  <header class="topbar">
+    <h1>Дневник расходов</h1>
+
+    <div class="totals">
+      <div class="total-card">
+        <span class="total-label">Всего потрачено</span>
+        <strong class="total-value" id="total-all">0 ₽</strong>
+      </div>
+      <div class="total-card">
+        <span class="total-label">За текущий месяц</span>
+        <strong class="total-value" id="total-month">0 ₽</strong>
+      </div>
+      <div class="total-card">
+        <span class="total-label">Записей</span>
+        <strong class="total-value" id="total-count">0</strong>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <!-- ---------- Форма добавления / редактирования ---------- -->
+    <section class="card form-card">
+      <h2 id="form-title">Новая трата</h2>
+
+      <form id="form-expense" autocomplete="off">
+        <label class="field">
+          <span>Сумма, ₽</span>
+          <input type="number" id="input-amount" min="0" step="0.01" placeholder="например 1200" required>
+        </label>
+
+        <label class="field">
+          <span>Категория</span>
+          <select id="input-category">
+            <option>Еда</option>
+            <option>Транспорт</option>
+            <option>Кафе</option>
+            <option>Жильё</option>
+            <option>Развлечения</option>
+            <option>Здоровье</option>
+            <option>Другое</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Дата</span>
+          <input type="date" id="input-date">
+        </label>
+
+        <label class="field">
+          <span>Комментарий</span>
+          <input type="text" id="input-comment" maxlength="80" placeholder="необязательно">
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" id="btn-save" class="btn btn-primary">Добавить</button>
+          <button type="button" id="btn-cancel-edit" class="btn btn-ghost" hidden>Отменить правку</button>
+        </div>
+
+        <p class="form-error" id="form-error" hidden></p>
+      </form>
+    </section>
+
+    <!-- ---------- Фильтры ---------- -->
+    <section class="card filters-card">
+      <h2>Поиск и фильтры</h2>
+
+      <label class="field">
+        <span>Поиск по комментарию</span>
+        <input type="search" id="search" placeholder="начни печатать...">
+      </label>
+
+      <label class="field">
+        <span>Категория</span>
+        <select id="filter-category">
+          <option value="">Все категории</option>
+          <option>Еда</option>
+          <option>Транспорт</option>
+          <option>Кафе</option>
+          <option>Жильё</option>
+          <option>Развлечения</option>
+          <option>Здоровье</option>
+          <option>Другое</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Сортировка</span>
+        <select id="sort-by">
+          <option value="date-desc">Сначала новые</option>
+          <option value="date-asc">Сначала старые</option>
+          <option value="amount-desc">Сначала дорогие</option>
+          <option value="amount-asc">Сначала дешёвые</option>
+        </select>
+      </label>
+
+      <button type="button" id="btn-reset-filters" class="btn btn-ghost">Сбросить фильтры</button>
+    </section>
+
+    <!-- ---------- Список трат ---------- -->
+    <section class="card list-card">
+      <h2>Траты</h2>
+
+      <!-- Сюда JavaScript будет добавлять строки со тратами -->
+      <ul class="expense-list" id="expense-list"></ul>
+        <li>
+          <div class ="expense-main">
+              <div class ="expense-top">
+                <span class ="expense-amount">
+                <span class ="expense-category">
+                <span class ="expense-date">
+              <div class ="expense-comment">
+
+      <!-- Показывается, когда список пуст -->
+      <p class="empty-state" id="empty-state">Пока пусто. Добавь первую трату.</p>
+    </section>
+
+    <!-- ---------- Итоги по категориям ---------- -->
+    <section class="card stats-card">
+      <h2>По категориям</h2>
+      <!-- Сюда JavaScript будет добавлять полоски с долями -->
+      <div class="stats" id="category-stats"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Учебный проект курса JavaScript. Данные хранятся только в твоём браузере.</p>
+  </footer>
+
+  <!-- Подключение скрипта. Атрибут defer значит:
+       сначала браузер построит страницу, потом запустит скрипт.
+       Без него JS может не найти элементы — их ещё не будет. -->
+  <script src="app.js" defer></script>
+</body>
+</html>
