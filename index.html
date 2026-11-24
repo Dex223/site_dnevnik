@@ -32,7 +32,6 @@
 
   <main class="layout">
 
-    <!-- ---------- Форма добавления / редактирования ---------- -->
     <section class="card form-card">
       <h2 id="form-title">Новая трата</h2>
 
@@ -110,11 +109,11 @@
       <button type="button" id="btn-reset-filters" class="btn btn-ghost">Сбросить фильтры</button>
     </section>
 
-    <!-- ---------- Список трат ---------- -->
+
     <section class="card list-card">
       <h2>Траты</h2>
 
-      <!-- Сюда JavaScript будет добавлять строки со тратами -->
+   
       <ul class="expense-list" id="expense-list"></ul>
         <li>
           <div class ="expense-main">
@@ -124,14 +123,14 @@
                 <span class ="expense-date">
               <div class ="expense-comment">
 
-      <!-- Показывается, когда список пуст -->
+    
       <p class="empty-state" id="empty-state">Пока пусто. Добавь первую трату.</p>
     </section>
 
-    <!-- ---------- Итоги по категориям ---------- -->
+  
     <section class="card stats-card">
       <h2>По категориям</h2>
-      <!-- Сюда JavaScript будет добавлять полоски с долями -->
+   
       <div class="stats" id="category-stats"></div>
     </section>
 
@@ -141,9 +140,6 @@
     <p>Учебный проект курса JavaScript. Данные хранятся только в твоём браузере.</p>
   </footer>
 
-  <!-- Подключение скрипта. Атрибут defer значит:
-       сначала браузер построит страницу, потом запустит скрипт.
-       Без него JS может не найти элементы — их ещё не будет. -->
   <script src="app.js" defer></script>
 </body>
 </html>

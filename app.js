@@ -1,42 +1,7 @@
-// ============================================================
-// ДНЕВНИК РАСХОДОВ — ТВОЙ РАБОЧИЙ ФАЙЛ
-//
-// Здесь ты пишешь весь JavaScript сайта, урок за уроком (7-15).
-// Разметка (index.html) и стили (style.css) уже готовы — трогать
-// их не нужно.
-//
-// ЭТАЛОН готового файла лежит рядом: site-gotovyi/app.js
-// Промежуточные версии по урокам: site-etapy/app-07.js ... app-14.js
-//
-// Как проверять: открой index.html в браузере.
-//   VS Code: правый клик по index.html -> Open with Live Server
-//   или просто двойной клик по файлу в проводнике.
-//
-// Консоль браузера открывается клавишей F12 -> вкладка Console.
-// ============================================================
-
-
-// ============================================================
-// 1. НАСТРОЙКИ И СОСТОЯНИЕ
-// ============================================================
-// Урок 7-8. Ключ для localStorage и главный массив трат.
-
 const STORAGE_KEY = 'dnevnik-rashodov';
-
-// TODO (урок 7): создай пустой массив expenses
 let expenses = []
-
-
-
-// TODO (урок 11): добавь переменную editingId для режима правки
 let editingId = null;
 
-// ============================================================
-// 2. ХРАНИЛИЩЕ
-// ============================================================
-// Урок 10. Сохранение между перезагрузками страницы.
-
-// TODO (урок 10): функция loadExpenses()
 function loadExpenses(){
   const raw = localStorage.getItem(STORAGE_KEY);
 
@@ -49,18 +14,11 @@ function loadExpenses(){
     return[];
   }
 }
-// TODO (урок 10): функция saveExpenses()
+
 function saveExpenses() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses))
 }
 
-// ============================================================
-// 3. РАСЧЁТЫ
-// ============================================================
-// Урок 9. Это то, что ты уже умеешь из уроков 3-4:
-// цикл + накопитель, только теперь ходит по массиву объектов.
-
-// TODO (урок 9): функция sumOf(list) — сумма всех трат
 function sumOf(list){
   let total = 0;
   for(const item of list){
@@ -69,14 +27,13 @@ function sumOf(list){
   }
   return total;
 }
-// TODO (урок 9): функция currentMonthKey() — "2026-10"
+
 function currentMonthKey(){
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
   return year + '-'  + month;
 }
-// TODO (урок 9): функция sumForMonth(list, monthKey)
 function sumForMonth(list, monthKey){
   let total = 0;
   for (const item of list){
@@ -86,7 +43,6 @@ function sumForMonth(list, monthKey){
   }
   return total;
 }
-// TODO (урок 12): функция statsByCategory(list) — итоги по категориям
 function statsByCategory(list) {
   const total = sumOf(list);
   if (total === 0) return [];
@@ -110,26 +66,17 @@ function statsByCategory(list) {
   result.sort((a, b) => b.sum - a.sum);
   return result;
 }
-
-// ============================================================
-// 4. ФОРМАТИРОВАНИЕ
-// ============================================================
-// Урок 9. Превращаем числа и даты в то, что приятно читать.
-
-// TODO (урок 9): функция formatMoney(value) — 1200 -> "1 200 ₽"
 function formatMoney(value){
   const rounded = Math.round(value * 100) / 100;
   const parts = String(rounded).split('.');
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   return parts.join(',') + ' ₽';
 }
-// TODO (урок 9): функция formatDate(iso) — "2026-10-15" -> "15.10.2026"
 function formatDate(iso){
   if (!iso) return '';
   const parts = iso.split('-');
   return parts[2] + '.' + parts[1] + '.' + parts[0];
 }
-// TODO (урок 7): функция todayIso() — сегодняшняя дата
 function todayIso(){
   const now = new Date();
   const year = now.getFullYear();
@@ -137,17 +84,9 @@ function todayIso(){
   const day = String(now.getDate()).padStart(2, '0');
   return year + '-' + month + '-' + day;
 }
-// TODO (урок 11): функция makeId() — уникальный id для новой траты
 function makeId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 }
-
-// ============================================================
-// 5. ФИЛЬТРЫ И СОРТИРОВКА
-// ============================================================
-// Урок 12. Возвращаем НОВЫЙ массив, исходный не меняем.
-
-// TODO (урок 12): функция getVisibleExpenses()
 function getVisibleExpenses() {
   const searchText = document.querySelector("#search").value.trim().toLowerCase();
   const category = document.querySelector('#filter-category').value;
@@ -172,14 +111,6 @@ function getVisibleExpenses() {
   }
 return result;
 }
-
-
-// ============================================================
-// 6. ОТРИСОВКА
-// ============================================================
-// Уроки 8-9. Главное правило: данные изменились -> render() заново.
-
-// TODO (урок 9): функция render() — вызывает три функции ниже
 function render(){
   const visible = getVisibleExpenses();
   renderTotals();
@@ -187,16 +118,11 @@ function render(){
   renderStats(visible);
 
 }
-
-// TODO (урок 8): функция renderTotals() — три карточки сверху
 function renderTotals(){
   document.querySelector('#total-all').textContent = formatMoney(sumOf(expenses));
   document.querySelector('#total-month').textContent = formatMoney(sumForMonth(expenses, currentMonthKey()));
   document.querySelector('#total-count').textContent = expenses.length;
 }
-
-// TODO (урок 9): функция renderList(list) — список трат
-
 function renderList(list){
   const ul = document.querySelector('#expense-list');
   const emptyState = document.querySelector('#empty-state')
@@ -220,8 +146,6 @@ function renderList(list){
     ul.appendChild(createExpenseElement(item));
   }
 }
-
-// TODO (урок 9): функция createExpenseElement(item) — одна строка списка
 function createExpenseElement(item){
   const li = document.createElement('li');
   li.className = 'expense-item';
@@ -281,7 +205,6 @@ function createExpenseElement(item){
   li.appendChild(actions);
   return li;
 }
-// TODO (урок 12): функция renderStats(list) — полоски по категориям
 function renderStats(list){
  const container = document.querySelector('#category-stats');
  container.innerHTML = '';
@@ -314,14 +237,6 @@ function renderStats(list){
   container.appendChild(block);
  }
 }
-
-
-// ============================================================
-// 7. ОБРАБОТЧИКИ СОБЫТИЙ
-// ============================================================
-// Уроки 8, 11. Код, который срабатывает на действия пользователя.
-
-// TODO (урок 8): функция handleSubmit(event) — кнопка "Добавить"
 function handleSubmit(event) {
   event.preventDefault();
 
@@ -375,7 +290,6 @@ function handleSubmit(event) {
   saveExpenses();
   render();
 }
-// TODO (урок 11): функция deleteExpense(id) — кнопка "Удалить"
 function deleteExpense(id) {
   expenses = expenses.filter(function (item) {return item.id !== id; });
 
@@ -384,7 +298,6 @@ function deleteExpense(id) {
   saveExpenses();
   render();
 }
-// TODO (урок 11): функция startEdit(id) — кнопка "Изменить"
 function startEdit(id) {
   const item = expenses.find(function (e) { return e.id === id; });
   if (!item) return;
@@ -403,7 +316,6 @@ function startEdit(id) {
 
   document.querySelector('#input-amount').focus();
 }
-// TODO (урок 11): функция cancelEdit()
 function cancelEdit() {
   editingId = null;
 
@@ -413,37 +325,24 @@ function cancelEdit() {
   document.querySelector('#form-error').hidden = true;
   resetForm();
 }
-// TODO (урок 11): функция showError(text) — сообщение об ошибке в форме
 function showError(text) {
   const errorBox = document.querySelector('#form-error');
   errorBox.textContent = text;
   errorBox.hidden = false;
 }
-// TODO (урок 11): функция resetForm() — очистить форму
 function resetForm() {
   document.querySelector('#input-amount').value = '';
   document.querySelector('#input-category').value = '';
   document.querySelector('#input-comment').value = '';
-
-  // Сегодняшняя дата в формате YYYY-MM-DD (как у <input type="date">)
   document.querySelector('#input-date').value = todayIso();
-
   document.querySelector('#form-error').hidden = true;
 }
-// TODO (урок 12): функция resetFilters()
 function resetFilters() {
   document.querySelector('#search').value = '';
   document.querySelector('#filter-category').value = '';
   document.querySelector('#sort-by').value = 'date-desc';
   render();
 }
-
-// ============================================================
-// 8. ЗАПУСК
-// ============================================================
-// Урок 7. Точка входа: код, который выполняется при загрузке страницы.
-
-// TODO (урок 7): функция init() — находит элементы, вешает события, рисует
 function init(){
  expenses = loadExpenses();
 
@@ -457,5 +356,4 @@ function init(){
 
  render();
 }
-// TODO (урок 7): вызвать init() в самом конце файла
 init();
